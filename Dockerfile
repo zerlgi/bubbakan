@@ -7,12 +7,13 @@ COPY . .
 RUN npm run build
 
 # Production stage
-#FROM nginx:stable-alpine as production-stage
+FROM nginx:stable-alpine as production-stage
 ## don't want NGINX vanilla.  Want non-port 80, and from RH ubi, or similar
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-EXPOSE 8080
-#CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 80
+#EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
 
 # To deploy on ezhost.dev you need to deploy from a git repo, 
 # paste the url of the repo and choose the name you want, 
